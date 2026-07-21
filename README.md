@@ -6,7 +6,7 @@ A cloud-native weather data ingestion system built with Python and AWS that auto
 
 ## Overview
 
-This project demonstrates a serverless ETL (Extract, Transform, Load) pipeline using Python and AWS services. The application automatically retrieves weather data for **Lagos (Ikeja)** from the OpenWeather API on a scheduled basis. The raw API response is archived in Amazon S3, transformed using AWS Lambda, and stored in Amazon RDS for historical analysis and SQL querying.
+This project is a cloud-based, serverless ETL pipeline that automates the **daily extraction, transformation, and storage** of weather data using Python and AWS. On a scheduled basis, Amazon EventBridge triggers an AWS Lambda function to retrieve weather data for **Lagos** from the OpenWeather API. The raw JSON response is stored in Amazon S3 for backup, while the processed data is loaded into Amazon RDS, enabling historical weather tracking and SQL-based analysis.
 
 ---
 
@@ -28,7 +28,6 @@ flowchart TD
 
     G --> H[SQL Queries]
 
-    H --> I[Historical Weather Analysis]
 ```
 
 ---
@@ -55,7 +54,7 @@ AWS Lambda executes the Python ETL script, retrieves weather data from the OpenW
 
 Amazon S3 stores raw weather API responses, providing a backup of the original data before transformation.
 
-![Amazon S3](S3 bucket.png)
+![Amazon S3](S3-bucket.png)
 
 ---
 
@@ -66,21 +65,32 @@ Processed weather data is stored in Amazon RDS, allowing historical weather info
 ![Amazon RDS](RDS.png)
 
 ---
-
 ## Workflow
 
-1. Amazon EventBridge triggers the AWS Lambda function on a scheduled interval.
-2. AWS Lambda requests weather data from the OpenWeather API.
-3. The raw JSON response is stored in Amazon S3.
-4. The data is transformed into a structured format.
-5. Processed weather records are inserted into Amazon RDS.
-6. Historical weather data can be queried for reporting and analysis.
+```mermaid
+flowchart TD
+    A[Amazon EventBridge]
+    B[AWS Lambda]
+    C[OpenWeather API]
+    D[Amazon S3]
+    E[Transform Weather Data]
+    F[Amazon RDS]
+    G[Historical Analysis] 
+
+    A -->|Scheduled Trigger| B
+    B -->|Request Data| C
+    C -->|JSON Response| B
+    B -->|Store Raw JSON| D
+    B -->|Process Data| E
+    E -->|Load Records| F
+    F -->|SQL Queries| G
+```
 
 ---
 
 ## Features
 
-- Automated weather data collection
+- Automated weather data collection that runs every morning
 - Scheduled serverless execution
 - OpenWeather API integration
 - Raw JSON backup in Amazon S3
@@ -89,57 +99,39 @@ Processed weather data is stored in Amazon RDS, allowing historical weather info
 - Modular and reusable Python code
 
 ---
+## Technologies Used
 
-## Technology Stack
-
-- Python
-- AWS Lambda
-- Amazon EventBridge
-- Amazon S3
-- Amazon RDS
-- OpenWeather API
-- SQL
-- Git & GitHub
+| Category | Technologies |
+|----------|--------------|
+| Programming | Python, SQL |
+| Cloud Platform | AWS Lambda, Amazon EventBridge, Amazon S3, Amazon RDS |
+| API | OpenWeather API |
+| Concepts | ETL Pipeline, Serverless Architecture, Workflow Automation |
+| Tools | Git, GitHub |
 
 ---
 
-## Skills Demonstrated
+## Key Learnings
 
-- Python Programming
-- REST API Integration
-- Cloud Computing (AWS)
-- Serverless Computing
-- ETL Pipeline Development
-- Relational Database Design
-- SQL
-- Workflow Automation
-- Software Engineering
-- Version Control (Git)
+Developing this project expanded my understanding of cloud-based software systems and automated data pipelines. Throughout the project, I gained practical experience in:
 
----
-
-## Lessons Learned
-
-This project strengthened my understanding of building cloud-based software systems and automated data pipelines. Through its development, I gained practical experience with:
-
-- Designing serverless applications using AWS Lambda
-- Automating scheduled workflows with Amazon EventBridge
+- Building serverless applications with AWS Lambda
+- Automating scheduled workflows using Amazon EventBridge
 - Integrating external REST APIs
-- Building ETL pipelines for reliable data processing
-- Storing raw and processed data using Amazon S3 and Amazon RDS
-- Writing modular and maintainable Python code
+- Designing ETL pipelines for reliable data processing
+- Managing raw and processed data with Amazon S3 and Amazon RDS
+- Writing modular, maintainable Python code
 
 ---
 
 ## Future Improvements
 
-- Support multiple cities
-- Containerize the application using Docker
-- Add CI/CD with GitHub Actions
-- Deploy infrastructure using Terraform
-- Build a web dashboard for weather visualization
-- Implement monitoring with Amazon CloudWatch
-- Add automated unit and integration tests
+- Extend support to multiple locations.
+- Develop a web dashboard for interactive weather visualization.
+- Add automated notifications for significant weather events.
+- Improve application performance and error handling.
+- Enhance data quality with validation and monitoring.
+- Deploy the system for production use with continuous monitoring.
 
 ---
 
